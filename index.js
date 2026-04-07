@@ -44,6 +44,45 @@ app.get('/users', (req, res) => {
   });
 });
 
+// Update
+app.put('/users/:name', (req, res) => {
+    const oldName = req.params.name;
+    const newName = req.body.name;
+
+    if (!newName) {
+        return res.status(400).json({ error: "Новое имя не указано" });
+    }
+
+    const index = users.indexOf(oldName);
+    if (index === -1) {
+        return res.status(404).json({ error: "Пользователь не найден" });
+    }
+
+    users[index] = newName;
+
+    res.json({
+        message: `Имя пользователя '${oldName}' изменено на '${newName}'`,
+        users
+    });
+});
+
+// Delete
+app.delete('/users/:name', (req, res) => {
+    const name = req.params.name;
+    const index = users.indexOf(name);
+
+    if (index === -1) {
+        return res.status(404).json({ error: "Пользователь не найден" });
+    }
+
+    users.splice(index, 1);
+
+    res.json({
+        message: `Пользователь '${name}' удалён`,
+        users
+    });
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
