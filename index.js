@@ -60,16 +60,18 @@ app.get('/users', async (req, res) => {
 });
 
 // 👇 PUT /users/:name — обновляем имя
-app.put('/users/:name', async (req, res) => {
-  const oldName = req.params.name;
+app.put('/users/:id', async (req, res) => {
+  const id = req.params.id;
   const newName = req.body.name;
 
-  if (!newName) return res.status(400).json({ error: "Новое имя не указано" });
+  if (!newName) {
+    return res.status(400).json({ error: "Новое имя не указано" });
+  }
 
   try {
     const result = await pool.query(
-      'UPDATE users SET name=$1 WHERE name=$2 RETURNING *',
-      [newName, oldName]
+      'UPDATE users SET name = $1 WHERE id = $2 RETURNING *',
+      [newName, id]
     );
 
     if (result.rows.length === 0) {
@@ -77,7 +79,7 @@ app.put('/users/:name', async (req, res) => {
     }
 
     res.json({
-      message: `Имя пользователя '${oldName}' изменено на '${newName}'`,
+      message: `Пользователь с id ${id} обновлён`,
       user: result.rows[0]
     });
   } catch (err) {
@@ -87,13 +89,13 @@ app.put('/users/:name', async (req, res) => {
 });
 
 // 👇 DELETE /users/:name — удаляем пользователя
-app.delete('/users/:name', async (req, res) => {
-  const name = req.params.name;
+app.delete('/users/:id', async (req, res) => {
+  const id = req.params.id;
 
   try {
     const result = await pool.query(
-      'DELETE FROM users WHERE name=$1 RETURNING *',
-      [name]
+      'DELETE FROM users WHERE id = $1 RETURNING *',
+      [id]
     );
 
     if (result.rows.length === 0) {
@@ -101,7 +103,7 @@ app.delete('/users/:name', async (req, res) => {
     }
 
     res.json({
-      message: `Пользователь '${name}' удалён`,
+      message: `Пользователь с id ${id} удалён`,
       user: result.rows[0]
     });
   } catch (err) {
