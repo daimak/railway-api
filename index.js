@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 
 // 👇 подключаемся к PostgreSQL через DATABASE_URL
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // обязательно для Railway
+  connectionString: process.env.DATABASE_URL || "postgresql://postgres:zFCvTXvmsetifnkDEBnhmkejobZBnamZ@postgres.railway.internal:5432/railway",
+  ssl: { rejectUnauthorized: false }
 });
 
 // 👇 базовые маршруты
