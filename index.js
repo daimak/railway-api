@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+
+app.use(express.json());
+
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
@@ -12,6 +15,14 @@ app.get('/api', (req, res) => {
 
 app.get('/hello/:name', (req, res) => {
   res.send(`Hello, ${req.params.name}!`);
+});
+
+app.post('/data', (req, res) => {
+  const name = req.body.name;
+
+  res.json({
+    message: `Привет, ${name}!`
+  });
 });
 
 app.listen(PORT, () => {
