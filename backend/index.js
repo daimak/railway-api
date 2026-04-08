@@ -1,55 +1,26 @@
-/frontend/index.js
-const API_URL = 'https://railway-api-production-6083.up.railway.app/users';
+const express = require('express');
+const path = require('path');
+const { Pool } = require('pg');
+const app = express();
+app.use(express.json());
 
-const addBtn = document.getElementById('addBtn');
-addBtn.onclick = addUser;
+// --- подключение к PostgreSQL ---
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
-async function loadUsers() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
+// --- раздаём фронтенд ---
+app.use(express.static(path.join(__dirname, '../frontend')));
 
-  const list = document.getElementById('usersList');
-  list.innerHTML = '';
+// --- API ---
+app.get('/users', async (req, res) => {
+  const result = await pool.query('SELECT * FROM users ORDER BY id');
+  res.json({ users: result.rows });
+});
 
-  data.users.forEach(user => {
-    const li = document.createElement('li');
-    li.textContent = user.name;
+// остальные маршруты POST, PUT, DELETE ...
 
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Удалить';
-    delBtn.className = 'delete-btn';
-    delBtn.onclick = () => deleteUser(user.id, li);
-
-    li.appendChild(delBtn);
-    list.appendChild(li);
-
-    setTimeout(() => li.classList.add('show'), 50);
-  });
-}
-
-async function addUser() {
-  const input = document.getElementById('nameInput');
-  const name = input.value.trim();
-  if (!name) return alert('Введите имя');
-
-  await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name })
-  });
-
-  input.value = '';
-  loadUsers();
-}
-
-async function deleteUser(id, li) {
-  li.classList.remove('show');
-  li.style.opacity = 0;
-  li.style.transform = 'translateY(-10px)';
-  await new Promise(r => setTimeout(r, 300));
-
-  await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-  loadUsers();
-}
-
-loadUsers();
+// --- запуск сервера ---
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
