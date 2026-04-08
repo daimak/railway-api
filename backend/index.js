@@ -13,8 +13,10 @@ const pool = new Pool({
 });
 
 // 👇 базовые маршруты
+const path = require('path');
+
 app.get('/', (req, res) => {
-  res.send('Hello, Railway!');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/api', (req, res) => {
