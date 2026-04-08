@@ -1,29 +1,48 @@
-const userList = document.getElementById('user-list');
+// Инициализация градиентного фона с Granim.js
+const granimInstance = new Granim({
+  element: '#granim-canvas',
+  name: 'background-gradient',
+  direction: 'diagonal',
+  isPausedWhenNotInView: true,
+  states : {
+    "default-state": {
+      gradients: [
+        ['#ff9a9e', '#fad0c4'],
+        ['#a18cd1', '#fbc2eb'],
+        ['#ffecd2', '#fcb69f']
+      ],
+      transitionSpeed: 5000
+    }
+  }
+});
+
+// Работа с пользователями
+const usersList = document.getElementById('usersList');
 const form = document.getElementById('add-user-form');
 const nameInput = document.getElementById('user-name');
 
 // Рендер одного пользователя
 function renderUser(user) {
-  const card = document.createElement('div');
-  card.className = 'user-card';
-  card.innerHTML = `
+  const li = document.createElement('li');
+  li.innerHTML = `
     <span>${user.name}</span>
     <button onclick="deleteUser(${user.id}, this)">Удалить</button>
   `;
-  card.style.opacity = 0;
-  userList.appendChild(card);
+  li.style.opacity = 0;
+  usersList.appendChild(li);
 
+  // Плавное появление
   setTimeout(() => {
-    card.style.opacity = 1;
+    li.style.opacity = 1;
   }, 50);
 }
 
-// Загрузка всех пользователей с сервера при старте
+// Загрузка всех пользователей при старте
 function loadUsers() {
   fetch('/users')
     .then(res => res.json())
     .then(data => {
-      userList.innerHTML = '';
+      usersList.innerHTML = '';
       data.users.forEach(renderUser);
     });
 }
@@ -51,10 +70,10 @@ function deleteUser(id, button) {
   fetch(`/users/${id}`, { method: 'DELETE' })
     .then(res => res.json())
     .then(() => {
-      const card = button.parentElement;
-      card.style.opacity = 0;
-      card.style.transform = 'translateX(50px)';
-      setTimeout(() => card.remove(), 500);
+      const li = button.parentElement;
+      li.style.opacity = 0;
+      li.style.transform = 'translateX(50px)';
+      setTimeout(() => li.remove(), 500);
     });
 }
 

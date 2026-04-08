@@ -13,21 +13,24 @@
   <!-- Контейнер приложения -->
   <div class="app-container">
     <h1>Users 👤</h1>
-	<form id="add-user-form">
-	  <input id="user-name" type="text" placeholder="Введите имя">
-	  <button type="submit">Добавить</button>
-	</form>
 
-	<div id="user-list"></div>
+    <!-- Форма добавления -->
+    <form id="add-user-form">
+      <input id="user-name" type="text" placeholder="Введите имя">
+      <button type="submit">Добавить</button>
+    </form>
+
+    <!-- Список пользователей -->
+    <ul id="usersList"></ul>
   </div>
 
   <!-- Нижний футер -->
   <footer>Made with ❤️ by Your App</footer>
 
-  <!-- Granim.js -->
+  <!-- Granim.js для фона -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/granim/2.0.0/granim.min.js"></script>
 
-  <!-- Наш JS -->
+  <!-- JS приложения -->
   <script src="app.js" defer></script>
 
 </body>
