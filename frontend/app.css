@@ -17,12 +17,12 @@ canvas#granim-canvas {
 }
 
 .app-container {
-  max-width: 400px;
+  max-width: 800px; /* общий контейнер */
   margin: 0 auto;
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* форма по центру */
 }
 
 h1 {
@@ -30,14 +30,16 @@ h1 {
   margin-bottom: 20px;
 }
 
-form {
+/* Форма добавления остаётся по центру */
+form#add-user-form {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
   width: 100%;
+  max-width: 400px;
 }
 
-form input {
+form#add-user-form input {
   flex: 1;
   padding: 8px 12px;
   border-radius: 8px;
@@ -45,7 +47,7 @@ form input {
   font-size: 16px;
 }
 
-form button {
+form#add-user-form button {
   padding: 8px 12px;
   border-radius: 8px;
   border: none;
@@ -56,14 +58,15 @@ form button {
   transition: background 0.2s;
 }
 
-form button:hover {
+form#add-user-form button:hover {
   background: #574fd6;
 }
 
-/* Секция пользователей */
+/* Секция пользователей сдвинута влево */
 .users-section {
   width: 100%;
   text-align: left;
+  margin-left: 20px; /* отступ от левого края */
 }
 
 .users-section h2 {
@@ -87,10 +90,10 @@ form button:hover {
   align-items: center;
   padding: 10px 16px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #ffe4b5, #ffd699); /* светлый, читаемый */
-  color: #333; /* тёмный текст для контраста */
+  background: linear-gradient(135deg, #ffe4b5, #ffd699); /* светлый и читаемый */
+  color: #333; /* тёмный текст */
   font-weight: 600;
-  max-width: 250px; /* сделаем карточки уже */
+  max-width: 250px; /* карточки уже */
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
 }
