@@ -1,6 +1,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 const app = express();
+const path = require('path');
 
 app.use(express.json());
 
@@ -13,10 +14,10 @@ const pool = new Pool({
 });
 
 // 👇 базовые маршруты
-const path = require('path');
+
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.send('<h1>Работает!</h1>');
 });
 
 app.get('/api', (req, res) => {
