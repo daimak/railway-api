@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Users App</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: 40px auto;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px 0;
+    }
+    li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>👥 Users</h1>
+
+  <input id="nameInput" placeholder="Введите имя" />
+  <button onclick="addUser()">Добавить</button>
+
+  <ul id="usersList"></ul>
+
+  <script>
+    async function loadUsers() {
+      const res = await fetch('https://railway-api-production-6083.up.railway.app/users');
+      const data = await res.json();
+
+      const list = document.getElementById('usersList');
+      list.innerHTML = '';
+
+      data.users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user.name;
+        list.appendChild(li);
+      });
+    }
+
+    async function addUser() {
+      const input = document.getElementById('nameInput');
+      const name = input.value;
+
+      if (!name) return alert('Введите имя');
+
+      await fetch('https://railway-api-production-6083.up.railway.app/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name })
+      });
+
+      input.value = '';
+      loadUsers();
+    }
+
+    loadUsers();
+  </script>
+
+</body>
+</html>

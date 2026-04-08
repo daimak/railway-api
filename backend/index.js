@@ -17,7 +17,7 @@ const pool = new Pool({
 
 
 app.get('/', (req, res) => {
-  res.send('<h1>Работает!</h1>');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/api', (req, res) => {
