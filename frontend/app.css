@@ -1,112 +1,98 @@
-/* Общие стили */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  height: 100%;
-}
-
-/* Canvas под фон */
+/* canvas на весь экран */
 #granim-canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* фон за всем контентом */
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* фон */
 }
 
-/* Контейнер приложения */
+/* общий стиль страницы */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+/* контейнер приложения */
 .app-container {
   position: relative;
-  max-width: 400px;
-  margin: 80px auto 20px auto;
-  padding: 20px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  z-index: 1;
   text-align: center;
+  margin-top: 10vh;
 }
 
-/* Заголовок */
-.app-container h1 {
+/* заголовок */
+h1 {
+  font-size: 3rem;
   margin-bottom: 20px;
-  font-size: 28px;
-  color: #333;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
 }
 
-/* Поле ввода */
-input#nameInput {
-  width: calc(100% - 24px);
+/* input и кнопка */
+input[type="text"] {
   padding: 10px;
-  font-size: 16px;
-  border: 2px solid #2193b0;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-/* Кнопка */
-button#addBtn {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background: #2193b0;
-  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  margin-right: 10px;
 }
 
-button#addBtn:hover {
-  background: #6dd5ed;
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: rgba(255,255,255,0.4);
   transform: scale(1.05);
 }
 
-/* Список пользователей */
-#usersList {
+/* список пользователей */
+ul {
   list-style: none;
   padding: 0;
   margin-top: 20px;
 }
 
-#usersList li {
+li {
+  background: rgba(255,255,255,0.2);
+  margin: 5px auto;
   padding: 8px 12px;
-  margin-bottom: 10px;
-  background: #f0f8ff;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  max-width: 200px;
   transition: all 0.3s ease;
 }
 
-/* Кнопка удалить внутри списка */
+li.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .delete-btn {
-  background: #cc2b5e;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 4px 8px;
-  cursor: pointer;
-  font-size: 14px;
+  margin-left: 10px;
+  background: rgba(255,0,0,0.5);
+  border-radius: 3px;
+  padding: 2px 6px;
 }
 
 .delete-btn:hover {
-  background: #753a88;
+  background: rgba(255,0,0,0.8);
 }
 
-/* Нижний футер-полоска */
+/* футер */
 footer {
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
-  height: 30px;
-  background: #2193b0;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: rgba(0,0,128,0.7);
+  text-align: center;
+  padding: 10px 0;
 }

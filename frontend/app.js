@@ -1,25 +1,9 @@
-// --- Плавный градиент ---
-var granimInstance = new Granim({
-    element: '#granim-canvas',
-    direction: 'diagonal',
-    isPausedWhenNotInView: true,
-    states : {
-        "default-state": {
-            gradients: [
-                ['#FF5F6D', '#FFC371'],
-                ['#2193b0', '#6dd5ed'],
-                ['#cc2b5e', '#753a88']
-            ]
-        }
-    }
-});
-
-// --- Работа с API ---
-const API_URL = 'https://railway-api-production-6083.up.railway.app/users';
+const API_URL = '/users';
 
 const addBtn = document.getElementById('addBtn');
 addBtn.onclick = addUser;
 
+// загружаем пользователей
 async function loadUsers() {
   const res = await fetch(API_URL);
   const data = await res.json();
@@ -39,11 +23,11 @@ async function loadUsers() {
     li.appendChild(delBtn);
     list.appendChild(li);
 
-    // плавное появление
-    setTimeout(() => li.style.opacity = 1, 50);
+    setTimeout(() => li.classList.add('show'), 50);
   });
 }
 
+// добавить пользователя
 async function addUser() {
   const input = document.getElementById('nameInput');
   const name = input.value.trim();
@@ -59,10 +43,33 @@ async function addUser() {
   loadUsers();
 }
 
+// удалить пользователя
 async function deleteUser(id, li) {
+  li.classList.remove('show');
+  li.style.opacity = 0;
+  li.style.transform = 'translateY(-10px)';
+  await new Promise(r => setTimeout(r, 300));
+
   await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
   loadUsers();
 }
 
-// загрузка пользователей при старте
+// старт
 loadUsers();
+
+// --- Granim ---
+new Granim({
+  element: '#granim-canvas',
+  direction: 'diagonal',
+  isPausedWhenNotInView: true,
+  states : {
+    "default-state": {
+      gradients: [
+        ['#ff9a9e', '#fad0c4'],
+        ['#a1c4fd', '#c2e9fb'],
+        ['#667eea', '#764ba2']
+      ],
+      transitionSpeed: 4000
+    }
+  }
+});
