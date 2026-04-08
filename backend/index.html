@@ -1,34 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+  <meta charset="UTF-8">
   <title>Users App</title>
-  <style>
-    body {
-      font-family: Arial;
-      max-width: 600px;
-      margin: 40px auto;
-    }
-    input, button {
-      padding: 8px;
-      margin: 5px 0;
-    }
-    li {
-      margin: 5px 0;
-    }
-  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <h1>👥 Users</h1>
+  <header>
+    <h1>👥 Users App</h1>
+  </header>
 
-  <input id="nameInput" placeholder="Введите имя" />
-  <button onclick="addUser()">Добавить</button>
+  <main>
+    <input id="nameInput" placeholder="Введите имя" />
+    <button id="addBtn">Добавить</button>
 
-  <ul id="usersList"></ul>
+    <ul id="usersList"></ul>
+  </main>
+
+  <footer>
+    <p>Мини-приложение для управления пользователями</p>
+  </footer>
 
   <script>
+    const API_URL = 'https://railway-api-production-6083.up.railway.app/users';
+
+    const addBtn = document.getElementById('addBtn');
+    addBtn.onclick = addUser;
+
     async function loadUsers() {
-      const res = await fetch('https://railway-api-production-6083.up.railway.app/users');
+      const res = await fetch(API_URL);
       const data = await res.json();
 
       const list = document.getElementById('usersList');
@@ -37,17 +38,26 @@
       data.users.forEach(user => {
         const li = document.createElement('li');
         li.textContent = user.name;
+
+        const delBtn = document.createElement('button');
+        delBtn.textContent = 'Удалить';
+        delBtn.className = 'delete-btn';
+        delBtn.onclick = () => deleteUser(user.id, li);
+
+        li.appendChild(delBtn);
         list.appendChild(li);
+
+        // анимация появления
+        setTimeout(() => li.classList.add('show'), 50);
       });
     }
 
     async function addUser() {
       const input = document.getElementById('nameInput');
-      const name = input.value;
-
+      const name = input.value.trim();
       if (!name) return alert('Введите имя');
 
-      await fetch('https://railway-api-production-6083.up.railway.app/users', {
+      await fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name })
@@ -57,8 +67,17 @@
       loadUsers();
     }
 
+    async function deleteUser(id, li) {
+      li.classList.remove('show');
+      li.style.opacity = 0;
+      li.style.transform = 'translateY(-10px)';
+      await new Promise(r => setTimeout(r, 300));
+
+      await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      loadUsers();
+    }
+
     loadUsers();
   </script>
-
 </body>
 </html>
