@@ -2,27 +2,28 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Users App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Пользователи</title>
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-
   <header>
-    <h1>👥 Users App</h1>
+    <h1>User App <span class="avatar">👤</span></h1>
   </header>
 
   <main>
-    <input id="nameInput" placeholder="Введите имя" />
-    <button id="addBtn">Добавить</button>
+    <div class="user-form">
+      <input id="nameInput" type="text" placeholder="Введите имя">
+      <button id="addBtn">Добавить</button>
+    </div>
 
     <ul id="usersList"></ul>
   </main>
 
   <footer>
-    <p>Мини-приложение для управления пользователями</p>
+    Made with ❤️ by Your App
   </footer>
 
-  <!-- подключаем внешний JS -->
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
