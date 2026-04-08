@@ -1,4 +1,4 @@
-// Инициализация градиентного фона с Granim.js
+// Инициализация градиента фона
 const granimInstance = new Granim({
   element: '#granim-canvas',
   name: 'background-gradient',
@@ -21,7 +21,6 @@ const usersList = document.getElementById('usersList');
 const form = document.getElementById('add-user-form');
 const nameInput = document.getElementById('user-name');
 
-// Рендер одного пользователя
 function renderUser(user) {
   const li = document.createElement('li');
   li.innerHTML = `
@@ -31,13 +30,11 @@ function renderUser(user) {
   li.style.opacity = 0;
   usersList.appendChild(li);
 
-  // Плавное появление
   setTimeout(() => {
     li.style.opacity = 1;
   }, 50);
 }
 
-// Загрузка всех пользователей при старте
 function loadUsers() {
   fetch('/users')
     .then(res => res.json())
@@ -47,7 +44,6 @@ function loadUsers() {
     });
 }
 
-// Добавление нового пользователя
 form.addEventListener('submit', e => {
   e.preventDefault();
   const name = nameInput.value.trim();
@@ -58,14 +54,13 @@ form.addEventListener('submit', e => {
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({name})
   })
-    .then(res => res.json())
-    .then(data => {
-      renderUser(data.user);
-      nameInput.value = '';
-    });
+  .then(res => res.json())
+  .then(data => {
+    renderUser(data.user);
+    nameInput.value = '';
+  });
 });
 
-// Удаление пользователя
 function deleteUser(id, button) {
   fetch(`/users/${id}`, { method: 'DELETE' })
     .then(res => res.json())
@@ -77,5 +72,4 @@ function deleteUser(id, button) {
     });
 }
 
-// Загружаем пользователей при старте
 loadUsers();

@@ -4,7 +4,6 @@ body, html {
   padding: 0;
   height: 100%;
   font-family: 'Segoe UI', Tahoma, sans-serif;
-  background: #f0f4f8;
   position: relative;
 }
 
@@ -34,7 +33,7 @@ h1 {
 form {
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -61,24 +60,37 @@ form button:hover {
   background: #574fd6;
 }
 
+/* Секция пользователей */
+.users-section {
+  width: 100%;
+  text-align: left;
+}
+
+.users-section h2 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 18px;
+}
+
 #usersList {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
   padding: 0;
   list-style: none;
 }
 
+/* Карточки пользователей */
 #usersList li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 16px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-  color: #fff;
+  background: linear-gradient(135deg, #ffe4b5, #ffd699); /* светлый, читаемый */
+  color: #333; /* тёмный текст для контраста */
   font-weight: 600;
+  max-width: 250px; /* сделаем карточки уже */
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s, opacity 0.5s;
 }
@@ -89,17 +101,17 @@ form button:hover {
 }
 
 #usersList li button {
-  background: rgba(255,255,255,0.2);
+  background: rgba(0,0,0,0.1);
   border: none;
   padding: 5px 12px;
   border-radius: 8px;
-  color: #fff;
+  color: #333;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 #usersList li button:hover {
-  background: rgba(255,255,255,0.4);
+  background: rgba(0,0,0,0.2);
 }
 
 footer {
