@@ -8,6 +8,11 @@ app.use(express.json()); // чтобы обрабатывать JSON в теле
 // --- раздаём фронтенд (HTML/CSS/JS) ---
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/app.html'));
+});
+
 // --- подключение к PostgreSQL ---
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || "postgresql://postgres:password@localhost:5432/railway",
