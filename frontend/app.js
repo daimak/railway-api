@@ -1,75 +1,62 @@
-const API_URL = '/users';
+const userList = document.getElementById('user-list');
+const form = document.getElementById('add-user-form');
+const nameInput = document.getElementById('user-name');
 
-const addBtn = document.getElementById('addBtn');
-addBtn.onclick = addUser;
+// Рендер одного пользователя
+function renderUser(user) {
+  const card = document.createElement('div');
+  card.className = 'user-card';
+  card.innerHTML = `
+    <span>${user.name}</span>
+    <button onclick="deleteUser(${user.id}, this)">Удалить</button>
+  `;
+  card.style.opacity = 0;
+  userList.appendChild(card);
 
-// загружаем пользователей
-async function loadUsers() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-
-  const list = document.getElementById('usersList');
-  list.innerHTML = '';
-
-  data.users.forEach(user => {
-    const li = document.createElement('li');
-    li.textContent = user.name;
-
-    const delBtn = document.createElement('button');
-    delBtn.textContent = 'Удалить';
-    delBtn.className = 'delete-btn';
-    delBtn.onclick = () => deleteUser(user.id, li);
-
-    li.appendChild(delBtn);
-    list.appendChild(li);
-
-    setTimeout(() => li.classList.add('show'), 50);
-  });
+  setTimeout(() => {
+    card.style.opacity = 1;
+  }, 50);
 }
 
-// добавить пользователя
-async function addUser() {
-  const input = document.getElementById('nameInput');
-  const name = input.value.trim();
-  if (!name) return alert('Введите имя');
+// Загрузка всех пользователей с сервера при старте
+function loadUsers() {
+  fetch('/users')
+    .then(res => res.json())
+    .then(data => {
+      userList.innerHTML = '';
+      data.users.forEach(renderUser);
+    });
+}
 
-  await fetch(API_URL, {
+// Добавление нового пользователя
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = nameInput.value.trim();
+  if (!name) return;
+
+  fetch('/users', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name })
-  });
-
-  input.value = '';
-  loadUsers();
-}
-
-// удалить пользователя
-async function deleteUser(id, li) {
-  li.classList.remove('show');
-  li.style.opacity = 0;
-  li.style.transform = 'translateY(-10px)';
-  await new Promise(r => setTimeout(r, 300));
-
-  await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-  loadUsers();
-}
-
-// старт
-loadUsers();
-
-// --- Granim ---
-new Granim({
-  element: '#granim-canvas',
-  direction: 'diagonal',
-  isPausedWhenNotInView: true,
-  states : {
-    "default-state": {
-      gradients: [
-        ['#ff9a9e', '#fad0c4'],
-        ['#a1c4fd', '#c2e9fb'],
-        ['#667eea', '#764ba2']
-      ],
-      transitionSpeed: 4000
-    }
-  }
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name})
+  })
+    .then(res => res.json())
+    .then(data => {
+      renderUser(data.user);
+      nameInput.value = '';
+    });
 });
+
+// Удаление пользователя
+function deleteUser(id, button) {
+  fetch(`/users/${id}`, { method: 'DELETE' })
+    .then(res => res.json())
+    .then(() => {
+      const card = button.parentElement;
+      card.style.opacity = 0;
+      card.style.transform = 'translateX(50px)';
+      setTimeout(() => card.remove(), 500);
+    });
+}
+
+// Загружаем пользователей при старте
+loadUsers();
