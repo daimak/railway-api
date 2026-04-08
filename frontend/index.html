@@ -2,31 +2,30 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Пользователи</title>
-  <link rel="stylesheet" href="app.css">
+  <title>User App</title>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <!-- Canvas для анимированного градиента -->
+
+  <!-- Canvas для градиента -->
   <canvas id="granim-canvas"></canvas>
-  <header>
-    <h1>User App <span class="avatar">👤</span></h1>
-  </header>
-  <main>
-    <div class="user-form">
-      <button id="addBtn">Добавить</button>
-    </div>
 
+  <!-- Контейнер приложения -->
+  <div class="app-container">
+    <h1>Users 👤</h1>
+    <input type="text" id="nameInput" placeholder="Введите имя">
+    <button id="addBtn">Добавить</button>
     <ul id="usersList"></ul>
-  </main>
+  </div>
 
-  <footer>
-    Made with ❤️ by Your App
-  </footer>
-  
-  !-- Подключаем Granim.js -->
+  <!-- Нижний футер -->
+  <footer>Made with ❤️ by Your App</footer>
+
+  <!-- Granim.js (для плавного градиента) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/granim/2.0.0/granim.min.js"></script>
-  <!-- Подключаем наш app.js -->
+
+  <!-- Наш JS -->
   <script src="app.js" defer></script>
+
 </body>
 </html>
