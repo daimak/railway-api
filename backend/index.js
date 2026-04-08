@@ -25,8 +25,8 @@ app.get('/hello/:name', (req, res) => {
   res.send(`Hello, ${req.params.name}!`);
 });
 
-// 👇 POST /data — добавляем пользователя
-app.post('/data', async (req, res) => {
+// 👇 POST /users — добавляем пользователя
+app.post('/users', async (req, res) => {
   const name = req.body.name;
   if (!name) return res.status(400).json({ error: "Имя не указано" });
 
