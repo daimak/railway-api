@@ -1,18 +1,16 @@
 const express = require('express');
 const path = require('path');
-app.use(express.static(path.join(__dirname, '../frontend')));
 const { Pool } = require('pg');
-const app = express();
-app.use(express.json());
+
+const app = express();          // <-- сначала создаём app
+app.use(express.json());        // <-- потом middleware
+app.use(express.static(path.join(__dirname, '../frontend'))); // <-- потом статика
 
 // --- подключение к PostgreSQL ---
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
-
-// --- раздаём фронтенд ---
-
 
 // --- API ---
 app.get('/users', async (req, res) => {
