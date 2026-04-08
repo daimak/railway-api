@@ -1,127 +1,112 @@
-/* Плавный градиентный фон */
-body {
+/* Общие стили */
+body, html {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: #fff;
-  animation: gradientBG 15s ease infinite;
-  background-size: 400% 400%;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
 }
 
-/* Градиент анимация */
-@keyframes gradientBG {
-  0% { background: linear-gradient(120deg, #89f7fe, #66a6ff, #ffafbd, #ffc3a0); }
-  25% { background: linear-gradient(120deg, #ffc3a0, #ffafbd, #66a6ff, #89f7fe); }
-  50% { background: linear-gradient(120deg, #66a6ff, #89f7fe, #ffc3a0, #ffafbd); }
-  75% { background: linear-gradient(120deg, #ffafbd, #ffc3a0, #89f7fe, #66a6ff); }
-  100% { background: linear-gradient(120deg, #89f7fe, #66a6ff, #ffafbd, #ffc3a0); }
+/* Canvas под фон */
+#granim-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* фон за всем контентом */
 }
 
-/* Хедер */
-header {
+/* Контейнер приложения */
+.app-container {
+  position: relative;
+  max-width: 400px;
+  margin: 80px auto 20px auto;
+  padding: 20px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   text-align: center;
-  padding: 30px 10px;
-  font-size: 2em;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
 }
 
-/* Живой аватар */
-.avatar {
-  display: inline-block;
-  animation: bounce 2s infinite;
+/* Заголовок */
+.app-container h1 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #333;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Форма */
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.user-form {
-  margin: 20px;
-  display: flex;
-  gap: 10px;
-}
-
-input {
+/* Поле ввода */
+input#nameInput {
+  width: calc(100% - 24px);
   padding: 10px;
+  font-size: 16px;
+  border: 2px solid #2193b0;
   border-radius: 8px;
-  border: none;
-  font-size: 1em;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  margin-bottom: 10px;
 }
 
-button {
-  padding: 10px 20px;
+/* Кнопка */
+button#addBtn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background: #2193b0;
+  color: white;
   border: none;
   border-radius: 8px;
-  background: linear-gradient(to right, #667eea, #764ba2);
-  color: #fff;
-  font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+button#addBtn:hover {
+  background: #6dd5ed;
+  transform: scale(1.05);
 }
 
 /* Список пользователей */
-ul#usersList {
+#usersList {
   list-style: none;
   padding: 0;
-  width: 300px;
+  margin-top: 20px;
 }
 
-ul#usersList li {
-  background: rgba(255,255,255,0.2);
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 12px;
+#usersList li {
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  background: #f0f8ff;
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  opacity: 0;
-  transform: translateY(-20px);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
 }
 
-ul#usersList li.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+/* Кнопка удалить внутри списка */
 .delete-btn {
-  background: #ff4d4f;
-  border-radius: 8px;
-  padding: 5px 10px;
-  cursor: pointer;
+  background: #cc2b5e;
+  color: white;
   border: none;
-  color: #fff;
-  transition: transform 0.2s;
+  border-radius: 5px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .delete-btn:hover {
-  transform: scale(1.1);
+  background: #753a88;
 }
 
-/* Футер */
+/* Нижний футер-полоска */
 footer {
-  text-align: center;
-  padding: 15px 0;
-  background: rgba(0,0,0,0.2);
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.3);
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
+  height: 30px;
+  background: #2193b0;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
