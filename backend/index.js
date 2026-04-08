@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+app.use(express.static(path.join(__dirname, '../frontend')));
 const { Pool } = require('pg');
 const app = express();
 app.use(express.json());
@@ -11,7 +12,7 @@ const pool = new Pool({
 });
 
 // --- раздаём фронтенд ---
-app.use(express.static(path.join(__dirname, '../frontend')));
+
 
 // --- API ---
 app.get('/users', async (req, res) => {
